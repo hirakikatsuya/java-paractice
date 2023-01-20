@@ -24,8 +24,8 @@ public class JdbcSelectSample {
 
 		// Connection（データベースとの接続を表す）、PreparedStatement（発行するSQLを表す）を、それぞれ生成します。
 		try (Connection connection = DriverManager.getConnection(URL);
-				PreparedStatement statement = connection.prepareStatement("select * from user")) {
-
+				PreparedStatement statement = connection.prepareStatement("select * from user where id = ?")) {
+				statement.setLong(1, 2L);
 			// StatementにSQLを文字列で与えて実行します。
 			// 戻り値は、SQLの実行結果を表す、ResultSet（結果セット）です。
 			try (ResultSet resultSet = statement.executeQuery()) {
@@ -36,6 +36,7 @@ public class JdbcSelectSample {
 					System.out.println(resultSet.getLong("id"));
 					System.out.println(resultSet.getString("email"));
 					System.out.println(resultSet.getString("name"));
+					System.out.println(resultSet.getLong("money"));
 					System.out.println(resultSet.getDate("created_at"));
 				}
 			}
